@@ -1,0 +1,173 @@
+mat-sidenav-content{
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #673ab7;
+}
+.example-toolbar {
+  background-color: whitesmoke;
+  box-shadow: 0px 2px 2px #673ab7 !important;
+  z-index: 3;
+  height: 70px;
+}
+.example-is-mobile .content{
+  margin-top: 70px;
+}
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 3;
+}
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+.header-logo-container{
+  background-image:url("../../../../assets/images/tatvasoft.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0px 1px 1px rgb(61, 45, 73) !important;
+  z-index: 3;
+  height: 70px !important;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  flex: 1;
+}
+
+a {
+  text-decoration: none;
+}
+.mat-raised-button:hover {
+  background-color: #683ab7c4 !important; 
+}
+.sidebar-content{
+  padding: 0px 5px 0px 10px;
+}
+.sidebar {
+  background-color: #673ab7;
+  width: 12vw; 
+  box-shadow: 1px 0px 2px rgb(61, 45, 73) !important;
+}
+.footer {  
+  width: 100%;
+  position: relative;
+  background-color: whitesmoke;
+  color: #673ab7;
+  text-align: right;
+  padding: 10px;
+  padding-right: 5vw;
+  box-shadow: 0px -2px 2px #673ab7 !important;
+}
+@media only screen and (max-width: 1400px) {
+  .sidebar{
+    width: 14vw;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .sidebar{
+    width: 20vw;
+  } 
+}
+@media only screen and (max-width: 768px) {
+  .sidebar{
+    width: 30vw;
+  } 
+}
+.border-primary {
+  border-color: rgb(255, 255, 255) !important;
+}
+.title-text-color {
+  color: #673ab7;
+}
+.my-profile-link{
+  padding: 10px;
+  border-radius: 12px;
+}
+.my-profile-link:hover{
+    background-color: #683ab723;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+    padding: 10px;
+}
+.profile-text-container {
+  color: #673ab7;
+  font-size: 16px;
+  padding-top: 5px;
+}
+.img-container {
+  width: 42px;
+  height: 38px;
+  padding-right: 2px;
+  border-radius: 20%;
+  margin-top: -10px;
+}
+
+
+.searchButton{
+  color:#673ab7 !important;
+  border : 1px solid #673ab7 !important;
+}
+
+.searchButton:hover {
+  background-color: #673ab7;
+  color:white !important;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin: 2px;
+}
+
+.sidebar-item:hover {
+  background-color: #dad7f7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-item:hover span {
+  color: #673ab7;
+  font-weight: 500;
+}
+
+.sidebar-item span {
+  margin: 5px 10px;
+  font-weight: 400;
+  color: white;
+}
+
+.active {
+  background-color: #dad7f7;
+  border-left: 5px solid #a096ff;
+}
+
+.active span {
+  color: #673ab7;
+  font-weight: 500;
+}

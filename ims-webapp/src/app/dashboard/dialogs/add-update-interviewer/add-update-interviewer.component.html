@@ -1,0 +1,215 @@
+<div mat-dialog-content class="mat-dialog-content">
+  <div>
+    <div class="title">
+      <div class="d-flex justify-content-between">
+        <h1 *ngIf="availability == false" class="crossButton" type="submit" mat-raised-button color="primary">Add
+          Interviewer
+        </h1>
+        <h1 *ngIf="availability == true" class="crossButton" type="submit" mat-raised-button color="primary">Edit
+          Interviewer
+        </h1>
+        <div class="text-right">
+          <mat-icon id="close-icon" class="crossButton" color="primary" (click)="closeDialog()"
+            [mat-dialog-close]="false">close</mat-icon>
+        </div>
+      </div>
+      <hr class="title-br p-0 mt-0" />
+    </div>
+    <div class="my-4">
+      <div *ngIf="isLoading" class="cssload-container">
+        <div class="cssload-speeding-wheel"></div>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="submitInterviewerForm()">
+
+        <div class="row name-container">
+          <div class="col-6 first-name-container">
+            <mat-form-field class="example-full-width">
+              <mat-label>First name</mat-label>
+              <input required matInput type="text" formControlName="firstName" #tooltip="matTooltip" placeholder="Ex. Vikas"
+              [matTooltipDisabled]="fc.firstName.value.length > 1" matTooltip="Minimum two characters required" (keydown)="preventNumericInput($event)">
+              <mat-error *ngIf="fc.firstName.touched && fc.firstName.errors?.required">
+                Please enter first name
+              </mat-error>
+              <mat-error
+                *ngIf="fc.firstName.touched && !fc.firstName.errors?.required && fc.firstName.errors?.noSpaceAllowed">
+                Please enter valid first name
+              </mat-error>
+              <mat-error
+                *ngIf="fc.firstName.touched && !fc.firstName.errors?.required && !fc.firstName.errors?.noSpaceAllowed && fc.firstName.errors?.pattern">
+                Please enter valid first name
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 first-name-container">
+            <mat-form-field class="example-full-width">
+              <mat-label>Last name</mat-label>
+              <input required matInput type="text" formControlName="lastName" #tooltip="matTooltip" placeholder="Ex. Sharma"
+              [matTooltipDisabled]="fc.lastName.value.length > 1" matTooltip="Minimum two characters required" (keydown)="preventNumericInput($event)">
+              <mat-error *ngIf="fc.lastName.touched && fc.lastName.errors?.required">
+                Please enter last name
+              </mat-error>
+              <mat-error
+                *ngIf="fc.lastName.touched && !fc.lastName.errors?.required && fc.lastName.errors?.noSpaceAllowed">
+                Please enter valid last name
+              </mat-error>
+              <mat-error
+                *ngIf="fc.lastName.touched && !fc.lastName.errors?.required && !fc.lastName.errors?.noSpaceAllowed && fc.lastName.errors?.pattern">
+                Please enter valid last name
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <br><br><br>
+        </div>
+
+        <div class="row interviewer-career-details-container">
+          <div class="col-12 email-container">
+            <mat-form-field class="w-100">
+              <mat-label>Email</mat-label>
+              <div *ngIf="availability == true">
+                <input required id="email" matInput formControlName="email" type="email" placeholder="Ex. vikassharma@gmail.com" #tooltip="matTooltip"
+                matTooltip="You can't change interviewer email address"
+                  readonly />
+              </div>
+              <div *ngIf="availability == false">
+                <input required id="email" matInput formControlName="email" type="text" placeholder="Ex. vikassharma@gmail.com" />
+              </div>
+              <mat-error *ngIf="fc.email.touched && fc.email.errors?.required">
+                Please enter email address
+              </mat-error>
+              <mat-error *ngIf="fc.email.touched && !fc.email.errors?.required && fc.email.errors?.noSpaceAllowed">
+                Please enter valid email address
+              </mat-error>
+              <mat-error
+                *ngIf="fc.email.touched && !fc.email.errors?.required && !fc.email.errors?.noSpaceAllowed && fc.email.errors?.pattern">
+                Please enter valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <br><br><br>
+        </div>
+
+        <div *ngIf="availability == false">
+          <div class="row interviewer-career-details-container">
+            <div class="col-6 password-container">
+              <mat-form-field class="w-100">
+                <mat-label>Password</mat-label>
+                <input required id="password" matInput formControlName="password" autocomplete="new-password" type="password" maxlength="20"
+                  placeholder="Please enter your password" (ngModelChange)="checkPassword()"
+                  matTooltip="Password must contain 8 to 20 characters at least one digit, lower, upper case and one special character" />
+                <mat-error *ngIf="fc.password.touched && fc.password.errors?.required">
+                  Please enter password
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.password.touched && !fc.password.errors?.required && fc.password.errors?.noSpaceAllowed">
+                  Please enter valid password
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.password.touched && !fc.password.errors?.required && !fc.password.errors?.noSpaceAllowed && fc.password.errors?.pattern">
+                  Please enter password in valid format
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-6 password-container">
+              <mat-form-field class="w-100">
+                <mat-label>Confirm password</mat-label>
+                <input required id="confPassword" matInput formControlName="confPassword" type="password" placeholder="Please enter your confirm password" maxlength="20"
+                  (ngModelChange)="checkPassword()"
+                  matTooltip="Password must contain 8 to 20 characters at least one digit, lower, upper case and one special character" />
+                <mat-error *ngIf="fc.confPassword.touched && fc.confPassword.errors?.required">
+                  Please enter confirm password
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.confPassword.touched && !fc.confPassword.errors?.required && ( fc.confPassword.errors?.noSpaceAllowed || fc.confPassword.errors?.pattern || fc.confPassword.errors)">
+                  Password and confirm password does not match
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row name-container">
+          <div class="col-6 yoe-container">
+            <mat-form-field class="w-100">
+              <mat-label>Year of experience</mat-label>
+              <input required id="yoe" matInput formControlName="yoe" type="number" step="0.01" (input)="limitDecimalDigits($event)"
+              placeholder="Ex. 1, 2, 0.6(For 6 months), etc. (In years)" min="0" matTooltip="Year of experience must be in the range of *.00 to *.11"/>
+              <mat-error *ngIf="fc.yoe.touched && fc.yoe.errors?.required">
+                Please enter year of experience
+              </mat-error>
+              <mat-error *ngIf="fc.yoe.touched && !fc.yoe.errors?.required && fc.yoe.errors?.pattern">
+                Please enter year of experience in valid format
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6 designation-container">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Designation</mat-label>
+              <mat-select required formControlName="designation" disableOptionCentering >
+                <mat-option *ngFor="let designation of designationList" [value]="designation.id" placeholder="Select interviewer designation">
+                  {{ designation.designationName }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="fc.designation.touched && fc.designation.errors?.required">
+                Please select designation
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <br><br><br>
+        </div>
+
+        <div class="row interviewer-career-details-container">
+          <div class="col-6">
+            <mat-form-field class="w-100">
+              <mat-label>User role</mat-label>
+              <div *ngIf="availability == true">
+                <input required [readonly]="availability" type="text"  #tooltip="matTooltip" matTooltip="You can't change user role" matInput formControlName="userRole" />
+              </div>
+              <div *ngIf="availability == false">
+                <mat-select required matInput id="userRole" formControlName="userRole" disableOptionCentering>
+                  <mat-option *ngFor="let role of roles" [value]="role.id">
+                    {{ role.type }}
+                  </mat-option>
+                </mat-select>
+              </div>
+              <mat-error *ngIf="fc.userRole.touched && fc.userRole.errors?.required">
+                Please select role
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field class="w-100">
+              <mat-label>Department</mat-label>
+              <mat-select required formControlName="department" disableOptionCentering >
+                <mat-option *ngFor="let department of departments" [value]="department.id" placeholder="Select interviewer department">
+                  {{ department.department }}
+                </mat-option>
+              </mat-select>
+              <!-- open this comment if you want to diable changing department -->
+              <!-- <div *ngIf="availability == true">
+                <input required [readonly]="availability" type="text"  #tooltip="matTooltip" matTooltip="You can't change user department" matInput formControlName="department" />
+              </div>
+              <div *ngIf="availability == false">
+                <mat-select required matInput id="department" formControlName="department" disableOptionCentering>
+                  <mat-option *ngFor="let department of departments" [value]="department.id">
+                    {{ department.department }}
+                  </mat-option>
+                </mat-select>
+              </div> -->
+              <mat-error *ngIf="fc.department.touched && fc.department.errors?.required">
+                Please select department
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div mat-dialog-actions class="dialogButtons">
+          <button class="addUpdateButton" type="submit" color="primary" mat-raised-button>Save</button>
+          <button class="cancelButton" mat-raised-button (click)="closeDialog()"
+            [mat-dialog-close]="false">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <p></p>
+</div>

@@ -1,0 +1,248 @@
+<form [formGroup]="form">
+  <div class="d-flex justify-content-between align-items-around">
+    <div *ngIf="data">
+      <h1 mat-dialog-title>{{ data.status.status == "SCHEDULED" ? "Reschedule" : "Schedule" }} Interview</h1>
+    </div>
+    <div *ngIf="!data">
+      <h1 mat-dialog-title>Add Interview</h1>
+    </div>
+    <mat-icon
+      id="close-icon"
+      class="crossButton"
+      color="primary"
+      (click)="closeDialog()"
+      [mat-dialog-close]="false"
+      >close</mat-icon
+    >
+  </div>
+  <hr class="title-br p-0 mt-1" />
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-12 interviewee-container">
+        <mat-form-field class="w-100">
+          <mat-label>Interviewee</mat-label>
+          <input
+            required
+            type="text"
+            [value]="fc.interviewee.value"
+            (click)="setEmptyString()"
+            placeholder="Please select interviewee"
+            aria-label="Interviewee"
+            matInput
+            formControlName="interviewee"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let interviewee of filteredInterviewee | async"
+              [value]="interviewee"
+            >
+              {{ interviewee }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="fc.interviewee.errors && fc.interviewee.errors?.required"
+            >Please enter interviewee
+          </mat-error>
+
+          <mat-error
+            *ngIf="
+              !fc.interviewee.errors?.required &&
+              fc.interviewee.errors?.intervieweeListValidation
+            "
+            >Please select interviewee
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 date-container">
+        <mat-form-field class="w-100">
+          <mat-label>Interview date</mat-label>
+          <input
+            required
+            matInput
+            [matDatepicker]="picker"
+            (dateChange)="dateValidator($event)"
+            format="dd-MM-yyyy"
+            formControlName="interviewDate"
+            [min]="minDate"
+            [matDatepickerFilter]="filteredDate"
+          />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="fc.interviewDate.errors"
+            >Please enter valid date
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6 schedule-container">
+        <mat-form-field class="w-100 me-3">
+          <mat-label>Schedule time</mat-label>
+          <input required matInput type="time" formControlName="scheduledAt" matTooltip="Time should be between 9AM to 6PM and select time as per maintain 4 hours difference"/>
+          <mat-hint>24-hours format</mat-hint>
+          <mat-error
+            *ngIf="fc.scheduledAt.errors && fc.scheduledAt.errors?.required"
+            >Please enter time
+          </mat-error>
+
+          <mat-error *ngIf="fc.scheduledAt.errors?.scheduledAtValidation"
+            >Please time between 9 am to 6 pm</mat-error
+          >
+          <mat-error *ngIf="fc.scheduledAt.errors?.endTimeExpire"
+            >Time exceed from 6 pm</mat-error
+          >
+          <mat-error *ngIf="fc.scheduledAt.errors?.interviewerNotAvailable"
+            >Select another time interviewer not available for that
+            time</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="d-flex col-12 justify-content-end">
+        <mat-error *ngIf="form?.errors"
+          >*Please select date and time as per maintain 4 hours
+          difference</mat-error
+        >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 type-container">
+        <mat-form-field class="w-100">
+          <mat-label>Interview round type</mat-label>
+          <input required readonly type="text" matTooltip="You can't change round type" matInput formControlName="roundType" />
+          <!-- <mat-select
+            required
+            disableOptionCentering
+            formControlName="roundType"
+            (valueChange)="changeDuration($event)"
+          >
+            <mat-option *ngFor="let type of roundTypes" [value]="type.id">
+              {{ type.roundType }}
+            </mat-option>
+          </mat-select> -->
+          <mat-hint *ngIf="duration > 0" class="duration-hint"
+            >Duration of interview: {{ duration }} min
+          </mat-hint>
+          <mat-error
+            *ngIf="fc.roundType.errors && fc.roundType.errors?.required"
+            >Please select round type
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6 interviewer-button-container m-auto">
+        <div class="row">
+          <div class="col-12">
+            <div class="row p-2">
+              <button
+                class="w-100 interviewBtn m-1"
+                mat-raised-button
+                type="button"
+                color="primary"
+                (click)="getAvailableInterviewer()"
+              >
+                Search interviewer
+              </button>
+            </div>
+            <div class="col-12">
+              <mat-error *ngIf="isInterviewerDeselected">
+                *Please select interviewer
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Interviewer&nbsp;*</mat-label>
+          <input
+            type="text"
+            placeholder="Interviewer"
+            aria-label="Interviewer"
+            matInput
+            formControlName="interviewer"
+            [matAutocomplete]="abc"
+            matTooltip="You cannot change interviewer"
+            readonly
+          />
+          <mat-autocomplete autoActiveFirstOption #abc="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredInterviewer | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="fc.interviewer.errors && fc.interviewer.errors?.required"
+            >Please enter interviewer
+          </mat-error>
+          <mat-error
+            *ngIf="
+              fc.interviewer.errors &&
+              !fc.interviewer.errors?.required &&
+              fc.interviewer.errors.interviewerListValidation
+            "
+            >Please select appropriate interviewer
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <mat-form-field class="col-12 w-100">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-error *ngIf="isIntervieweeAssignedInterview">
+          {{ errorMessage }}
+        </mat-error>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-error *ngIf="!interviewerAvailable.status"
+        >*{{ interviewerAvailable.message }}</mat-error
+      >
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions class="justify-content-center pt-2">
+    <div class="d-flex h-100">
+      <div class="mr-2 p-2">
+        <button
+          class="saveBtn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="addInterview()"
+        >
+          Save
+        </button>
+      </div>
+      <div class="p-2">
+        <button class="closeBtn" mat-raised-button (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

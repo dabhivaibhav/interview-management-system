@@ -1,0 +1,177 @@
+table {
+    width: 100%;
+}
+
+td, th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.mat-header-cell {
+    background-color: #673ab7;
+    color: white;
+    font-size: 16px;
+}
+
+.mat-form-field {
+    width: 25%;
+    height: 20%;
+}
+
+.title-br {
+    border-top: 5px solid #673ab7;
+    margin: 7px !important;
+}
+
+.title {
+    color: #673ab7;
+}
+
+.table-with-space th,
+.table-with-space td {    
+    padding: 0.7rem;
+}
+
+.delete-button{
+    color: rgba(220, 22, 22, 0.8) !important;
+    border: 1px solid rgba(220, 22, 22, 0.8) !important;
+} 
+.clearAllBtn{
+    border : 1px solid #673ab7;
+    color:#673ab7 !important;
+}
+.searchBtn{
+    background-color:#673ab7 !important;
+    border : 1px solid #673ab7 !important;
+    color: white;
+}
+.searchBtn:hover {
+    color: #673ab7;
+    background-color:white !important;
+}
+.clearAllBtn:hover {
+    background-color: #673ab7;
+    color:white !important;
+}
+.addEditBtn{
+    border : 1px solid #673ab7 !important;
+    color:#673ab7 !important;
+}
+.margin-right{
+    margin-right:5px;
+}
+
+.cancel-button, .view-button {
+  border: 1px solid #673ab7;
+  color: #673ab7;
+}
+
+.actions-button {
+  min-width: 250px;
+}
+.view-button:hover:enabled {
+  background-color: #673ab7;
+  color: white !important;
+}
+
+.container-fluid{
+    padding: 0 30px;
+}
+input[type="time"]::-webkit-calendar-picker-indicator{
+  filter: invert(98%) sepia(93%) saturate(1207%) hue-rotate(30deg) brightness(55%) contrast(20%);
+}
+
+.cssload-container {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+  }
+  
+  .cssload-speeding-wheel {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    width: 63px;
+    height: 63px;
+    margin: 0 auto;
+    border: 8px solid #673ab7;
+    border-radius: 60%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: cssload-spin 1000ms infinite linear;
+    -o-animation: cssload-spin 1000ms infinite linear;
+    -ms-animation: cssload-spin 1000ms infinite linear;
+    -webkit-animation: cssload-spin 1000ms infinite linear;
+    -moz-animation: cssload-spin 1000ms infinite linear;
+  }
+  
+  @keyframes cssload-spin {
+    100% {
+      transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-o-keyframes cssload-spin {
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-ms-keyframes cssload-spin {
+    100% {
+      -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes cssload-spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-moz-keyframes cssload-spin {
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  .custom-mat-mini-fab {
+    top: 0px;
+    width: 27px;
+    height: 27px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+  }
+
+  .custom-mat-icon {
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0px;
+    padding-top: 1px;
+    line-height:initial;
+  }
+
+  ::ng-deep .mat-mini-fab .mat-button-wrapper {
+    padding: 4px 0px !important;
+    display:block !important;
+    line-height: 24px !important;
+}
+
+.days-button{
+  min-width: 200px;
+}

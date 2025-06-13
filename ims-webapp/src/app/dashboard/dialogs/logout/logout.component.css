@@ -1,0 +1,14 @@
+.logout-btn {
+    border: 1px solid #673ab7;
+    background-color: #673ab7;
+    color: white;
+}
+
+.closeBtn{
+    border: 1px solid  #673ab7;
+}
+
+.logout-btn:hover {
+    color: #673ab7;
+    background-color: white;
+}

@@ -1,0 +1,42 @@
+<form [formGroup]="cancelInterviewForm">
+    <div class="d-flex justify-content-between align-items-around">
+        <h1 mat-dialog-title>
+            Cancel Interview
+        </h1>
+        <mat-icon id="close-icon" class="crossButton" color="primary" (click)="closeDialog()"
+            [mat-dialog-close]="false">close</mat-icon>
+    </div>
+    <hr class="title-br p-0 mt-1" />
+    <div *ngIf="isLoading" class="cssload-container">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-12 interviewer-container">
+                <mat-form-field class="w-100">
+                    <mat-label>Cancel reason</mat-label>
+                    <input required type="text" placeholder="Reason" aria-label="cancelReason" matInput
+                        formControlName="cancelReason" />
+                    <mat-error *ngIf="(fc.cancelReason.errors && fc.cancelReason.errors?.required) || (fc.cancelReason.errors && fc.cancelReason.errors?.noSpaceAllowed)">Please enter interview
+                        cancellation reason
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+    <div mat-dialog-actions class="justify-content-center pt-2">
+        <div class="d-flex h-100">
+            <div class="mr-2 p-2">
+                <button class="saveBtn" mat-raised-button color="primary" type="submit" (click)="cancelInterview()">
+                    Save
+                </button>
+            </div>
+            <div class="p-2">
+                <button class="closeBtn" mat-raised-button (click)="onCancel()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

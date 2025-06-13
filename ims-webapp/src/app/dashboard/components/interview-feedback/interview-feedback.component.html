@@ -1,0 +1,274 @@
+<form [formGroup]="interviewFeedbackForm">
+  <div class="d-flex justify-content-between align-items-around">
+    <h1 mat-dialog-title>Interview Feedback</h1>
+    <mat-icon
+      id="close-icon"
+      class="crossButton"
+      color="primary"
+      (click)="closeDialog()"
+      [mat-dialog-close]="false"
+      >close</mat-icon
+    >
+  </div>
+  <hr class="title-br p-0 mt-1" />
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-4 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Frontend</mat-label>
+          <input
+            required
+            [readonly]="viewFeedback"
+            type="number"
+            placeholder="Rating for frontend"
+            aria-label="frontendScore"
+            matInput
+            formControlName="frontendScore"
+            min="1"
+            max="10"
+            #tooltip="matTooltip"
+            matTooltip="Rate between 1 and 10"
+            pattern="\b(?:[1-9]|10)\b"
+          />
+          <mat-error
+            *ngIf="fc.frontendScore.errors && fc.frontendScore.errors?.required"
+            >Please enter frontend rating out Of 10
+          </mat-error>
+          <mat-error
+          *ngIf="!fc.frontendScore.errors?.required && fc.frontendScore.errors?.pattern"
+           >Please enter valid frontend rating
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-4 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Backend</mat-label>
+          <input
+            required
+            [readonly]="viewFeedback"
+            type="number"
+            placeholder="Rating for backend"
+            aria-label="backendScore"
+            matInput
+            formControlName="backendScore"
+            min="1"
+            max="10"
+            #tooltip="matTooltip"
+            matTooltip="Rate between 1 and 10"
+            pattern="\b(?:[1-9]|10)\b"
+          />
+          <mat-error
+            *ngIf="fc.backendScore.errors && fc.backendScore.errors?.required"
+            >Please enter backend rating out of 10
+          </mat-error>
+          <mat-error
+          *ngIf="!fc.backendScore.errors?.required && fc.backendScore.errors?.pattern"
+           >Please enter valid backend rating
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-4 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Database</mat-label>
+          <input
+            required
+            [readonly]="viewFeedback"
+            type="number"
+            placeholder="Rating for database"
+            aria-label="databaseScore"
+            matInput
+            formControlName="databaseScore"
+            pattern="\b(?:[1-9]|10)\b"
+          />
+          <mat-error
+            *ngIf="fc.databaseScore.errors && fc.databaseScore.errors?.required"
+            >Please enter database rating out of 10
+          </mat-error>
+          <mat-error
+          *ngIf="!fc.databaseScore.errors?.required && fc.databaseScore.errors?.pattern"
+           >Please enter valid database rating
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Communication</mat-label>
+          <input
+            required
+            [readonly]="viewFeedback"
+            type="number"
+            placeholder="Rating for communication"
+            aria-label="communicationScore"
+            matInput
+            formControlName="communicationScore"
+            min="1"
+            max="10"
+            #tooltip="matTooltip"
+            matTooltip="Rate between 1 and 10"
+            pattern="\b(?:[1-9]|10)\b"
+          />
+          <mat-error
+            *ngIf="
+              fc.communicationScore.errors &&
+              fc.communicationScore.errors?.required
+            "
+            >Please enter communication rating out of 10
+          </mat-error>
+          <mat-error
+          *ngIf="!fc.communicationScore.errors?.required && fc.communicationScore.errors?.pattern"
+           >Please enter valid communication rating
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-4 interviewer-container">
+        <div *ngIf="viewFeedback">
+          <mat-form-field class="w-100">
+            <mat-label>Selection status</mat-label>
+            <input
+            required
+            [readonly]="viewFeedback"
+            type="text"
+              matInput
+              formControlName="status"
+              />
+          </mat-form-field>
+        </div>
+        <div *ngIf="!viewFeedback">
+          <mat-form-field class="w-100">
+            <mat-label>Selection status</mat-label>
+            <mat-select required aria-label="status" formControlName="status">
+              <mat-option value="SELECTED">SELECTED</mat-option>
+              <mat-option value="NOT_SELECTED">NOT SELECTED</mat-option>
+            </mat-select>
+            <mat-error *ngIf="fc.status.errors && fc.status.errors?.required"
+              >Please select selection status
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="data.roundType.roundType==='PRACTICAL' && viewFeedback===false" class="col-4 d-flex align-items-around">
+        <section class="example-section justify-content-center">
+          <mat-checkbox class="example-margin" formControlName="ceoRoundRequired">CEO round required?</mat-checkbox>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 interviewer-container">
+        <mat-form-field class="w-100">
+          <mat-label>Overall comment</mat-label>
+          <textarea
+          [readonly]="viewFeedback"
+          matInput
+          placeholder="Please enter NA if no comments"
+          aria-label="comments"
+          formControlName="comments"
+          rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div class="row m-0" *ngIf="!viewFeedback">
+      <div class="col-12 file-container">
+        <div class="ml-1 mt-2">
+          <div *ngIf="!viewFeedback">
+            <input
+              type="file"
+              id="file-upload"
+              accept=".webm"
+              formControlName="file"
+              (change)="onFileSelected($event)"
+            />
+          </div>
+          <mat-icon class="file-upload-icon">file_upload</mat-icon>
+          <div class="file-upload-text">Drag & drop video here</div>
+          <div class="file-upload-text">or</div>
+          <label for="file-upload" class="mb-2 file-upload-icon"
+            >Click to upload</label
+          >
+        </div>
+      </div>
+
+      <div
+        class="error"
+        *ngIf="
+          this.interviewFeedbackForm.controls.file.touched &&
+          this.interviewFeedbackForm.controls.file.errors?.required &&
+          !isWrongFile
+        "
+      >
+        Please upload or drop video!!!
+      </div>
+
+      <div
+        class="error"
+        *ngIf="isWrongFile"
+      >
+        Please upload or drop video with format .webm!!!
+      </div>
+
+      <div class="row m-0" *ngIf="fileName">
+        <div class="chip">
+          <span>Selected file: {{ fileName }}</span>
+          <span class="close-icon" (click)="remove()"
+            ><mat-icon>close</mat-icon></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-0" *ngIf="isVideoPresent">
+      <div class="col-12">
+        <div class="ml-1 mt-2">
+          <div>
+            <label class="mb-2">Interview video:</label>
+          </div>
+          <div>
+            <video
+              controls
+              width="100%"
+              height="auto"
+              class="pt-1"
+              [src]="'./assets/' + fileName"
+              type="video/webm"
+            >
+              Your browser does not support the video tag.
+            </video>
+
+            <div>
+              <a [href]="'assets/' + this.fileName" target="_blank"
+                >Click here to show video in new tab</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions class="justify-content-center pt-2">
+    <div class="d-flex justify-content-center h-100">
+      <div class="mr-2 p-2">
+        <button
+          *ngIf="!viewFeedback"
+          class="saveBtn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="feedbackInterview()"
+        >
+          Save
+        </button>
+      </div>
+      <div class="p-2">
+        <button class="closeBtn" mat-raised-button (click)="onCancel()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

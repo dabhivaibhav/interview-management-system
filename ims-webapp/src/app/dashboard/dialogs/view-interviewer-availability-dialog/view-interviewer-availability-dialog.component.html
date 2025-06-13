@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between align-items-around">
+    <h1 mat-dialog-title class="title">Interviewer Availability</h1>
+    <mat-icon
+      id="close-icon"
+      class="crossButton"
+      color="primary"
+      (click)="closeDialog()"
+      [mat-dialog-close]="false"
+      >close</mat-icon
+    >
+  </div>
+  <hr class="title-br p-0 mt-1" />
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  
+  <div mat-dialog-content>  
+<ng-template #weekView let-segment="segment" let-locale="locale"  let-isTimeLabel="isTimeLabel" >
+    <div  
+    class="cal-hour-segment"  style="height: 40px; text-wrap: nowrap; width: auto;"
+    [class.cal-hour-start]="segment.isStart"
+    [class.cal-after-hour-start]="!segment.isStart"
+    [ngClass]="segment.cssClass">
+    <span class="cal-time" *ngIf="isTimeLabel"  style="width: 116px;">
+      {{ segment.date | timeRange}}
+    </span>
+    
+   </div>
+  </ng-template>
+
+  <mwl-calendar-week-view [viewDate]="viewDate"  [dayStartHour]="dayStartHour"
+  [hourSegments]="1" [hourSegmentTemplate]="weekView" [hourSegmentHeight]="50" [events]="events"
+  [dayEndHour]="dayEndHour"  [excludeDays]="excludeDays" [weekStartsOn]="1"  >
+  </mwl-calendar-week-view>
+</div>
+
+<div mat-dialog-actions class="justify-content-center pt-3">
+  <div class="d-flex h-100">
+    <div class="p-2">
+      <button
+        class="closeBtn"
+        mat-raised-button
+        (click)="closeDialog()"
+        type="button"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

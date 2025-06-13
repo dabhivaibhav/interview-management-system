@@ -1,0 +1,151 @@
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.login-container {
+  background-image: linear-gradient(rgb(103, 58, 183), rgba(103, 58, 183, 0.5));
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-inner-container {
+  height: 470px;
+  width: 500px;
+  background-color: whitesmoke;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+}
+
+form * {
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+
+.logo img {
+  aspect-ratio: 3/2;
+  object-fit: contain;
+  background-color: rgb(117 0 255 / 66%);
+  position: absolute;
+  transform: translate(-25%, 0);
+  top: 50%;
+  border-radius: 100px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+}
+
+.login-btn {
+  background-color: #673AB7;
+  color: white;
+  border-radius: 9%;
+}
+
+img {
+  left: 21%;
+  top: -11%;
+  z-index: 11;
+  background: #673AB7;
+  padding: 10px;
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  border-radius: 100px;
+}
+
+.login-btn:hover {
+  border: 1px solid #673AB7;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px whitesmoke inset !important;
+}
+
+.login-header {
+  color: #673AB7;
+  font-weight: 500;
+  font-size: xx-large;
+}
+
+.login-text-gray {
+  color: gray;
+  font-weight: 500;
+  font-size: large;
+}
+
+.cssload-container {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+}
+
+.cssload-speeding-wheel {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 48%;
+  top: 40%;
+  width: 63px;
+  height: 63px;
+  margin: 0 auto;
+  border: 8px solid #673ab7;
+  border-radius: 60%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: cssload-spin 1000ms infinite linear;
+  -o-animation: cssload-spin 1000ms infinite linear;
+  -ms-animation: cssload-spin 1000ms infinite linear;
+  -webkit-animation: cssload-spin 1000ms infinite linear;
+  -moz-animation: cssload-spin 1000ms infinite linear;
+}
+
+@keyframes cssload-spin {
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes cssload-spin {
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes cssload-spin {
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes cssload-spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes cssload-spin {
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.super{
+  font-size: larger;
+}

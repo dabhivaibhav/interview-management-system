@@ -1,0 +1,9 @@
+<div class="m-0 p-0 main ">
+    <div class=" h-100 position-fixed d-flex align-items-center justify-content-center w-100 content" *ngIf="room == undefined">
+        <h1 class="no-link-text">Please join the meeting from your mail.</h1>
+    </div>
+    <div class="background-image"></div>
+    <div *ngIf="room != undefined" class="jitsi-div container-fluid jitsi-div h-100 d-flex align-items-center">
+        <div id="jitsi-iframe" class="content"></div>
+    </div>
+</div>

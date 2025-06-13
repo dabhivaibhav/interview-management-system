@@ -1,0 +1,188 @@
+
+.title-br {
+    border-top: 5px solid #673ab7;
+    margin-top: 5px;
+}
+
+.title {
+    color: #673ab7;
+}
+.subtitle-br {
+  border-top: 3px solid #623ca3;
+}
+
+.subtitle {
+  color: #623ca3;
+}
+.deleteButton{
+    margin-left: 5px;
+    background-color: rgba(220, 22, 22, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(220, 22, 22, 0.8);
+}
+
+.deleteButton:hover{
+    color: rgba(220, 22, 22, 0.8) !important;
+    background-color: white !important;
+}
+.addBtn, .reset-button{
+    color: white;
+    border: 1px solid #673ab7;
+    background-color: #673ab7;
+}
+.addBtn:hover, .reset-button:hover {
+    background-color: white !important;
+    color: #673ab7 !important;
+}
+
+.example-section {
+  margin: 12px 0;
+}
+
+.example-margin {
+  margin: 0 12px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}
+
+.searchAddBtn {
+  color: white;
+  border: 1px solid #673ab7;
+  background-color: #673ab7;
+}
+
+.searchAddBtn:hover {
+  background-color: white;
+  color: #673ab7 !important;
+}
+
+.chip-close-button{
+  line-height: normal;
+  min-width: 0px !important;
+  padding: 1px !important;
+}
+
+.save-text{
+  font-size: larger;
+  font-weight: 500;
+  color: #623ca3;
+}
+
+::ng-deep .time-container .mat-form-field-wrapper {
+  padding: 0px !important;
+  padding-top: 2px !important;
+}
+
+::ng-deep .mat-select-panel {
+  max-height: 400px !important;
+  transform: scaleX(0);
+}
+
+::ng-deep .mat-select-panel {
+  min-width: calc(100%) !important;
+  transform: none !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+  transform: none !important;
+}
+
+.cssload-container {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+  }
+  ::ng-deep .cal-header span{
+    display: none;
+  }
+  :ng-deep .ng-star-inserted{
+    display: none !important;
+  }
+  
+  :ng-deep .cal-hour-start{
+    height: 50px !important;
+  }
+  ::ng-deep .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment, .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment{
+    display: flex;
+align-items: center;
+  }
+::ng-deep .cal-week-view .cal-time{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+  ::ng-deep .cal-week-view .cal-day-headers {
+    font-size: larger;
+    height: 50px;
+    display: flex;
+    padding-left: 120px;
+    align-items: center;
+    width: 100%;
+}
+::ng-deep .cal-week-view .cal-time-label-column {
+    width: fit-content;
+}
+  .cssload-speeding-wheel {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    width: 63px;
+    height: 63px;
+    margin: 0 auto;
+    border: 8px solid #673ab7;
+    border-radius: 60%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: cssload-spin 1000ms infinite linear;
+    -o-animation: cssload-spin 1000ms infinite linear;
+    -ms-animation: cssload-spin 1000ms infinite linear;
+    -webkit-animation: cssload-spin 1000ms infinite linear;
+    -moz-animation: cssload-spin 1000ms infinite linear;
+  }
+  
+  @keyframes cssload-spin {
+    100% {
+      transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-o-keyframes cssload-spin {
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-ms-keyframes cssload-spin {
+    100% {
+      -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes cssload-spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-moz-keyframes cssload-spin {
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }

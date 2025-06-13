@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div>
+    <h1 class="fw-900 mt-3 title">Interview Status (This Month) </h1>
+  </div>
+</div>
+<hr class="title-br p-2 mt-0" />
+<div class="pl-3 pr-3">
+  <div *ngIf="isDataAvailable;">
+    <div id="interview-status-pie-chart" (window:resize)="drawInterviewMonthStatusPieChart()"></div>
+  </div>
+  <div *ngIf="!isDataAvailable;" class="d-flex justify-content-center align-items-center">
+    <div class="no-record-found d-flex flex-column justify-content-center">No data available</div>
+  </div>
+</div>

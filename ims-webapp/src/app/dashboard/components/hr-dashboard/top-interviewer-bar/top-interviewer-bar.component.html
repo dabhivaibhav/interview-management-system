@@ -1,0 +1,12 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div>
+    <h1 class="fw-900 mt-3 title">Top Interviewers (Current month) </h1>
+  </div>
+</div>
+<hr class="title-br p-2 mt-0" />
+<div class="pl-3 pr-3">
+  <div id="top-interviewer-bar-chart" (window:resize)="getTopInterviewers()"></div>
+</div>

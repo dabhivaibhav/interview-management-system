@@ -1,0 +1,35 @@
+::ng-deep .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment, .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment{
+    display: flex;
+align-items: center;
+  }
+::ng-deep .cal-week-view .cal-time{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.mat-dialog-content{
+    overflow: hidden;
+}
+  ::ng-deep .cal-week-view .cal-day-headers {
+    font-size: larger;
+    height: 50px;
+    display: flex;
+    padding-left: 120px;
+    align-items: center;
+    width: 100%;
+}
+::ng-deep .cal-week-view .cal-time-label-column {
+    width: fit-content;
+}
+::ng-deep .cal-header span{
+  display: none;
+}
+:ng-deep .ng-star-inserted{
+  display: none !important;
+}
+
+:ng-deep .cal-hour-start{
+  height: 50px !important;
+}

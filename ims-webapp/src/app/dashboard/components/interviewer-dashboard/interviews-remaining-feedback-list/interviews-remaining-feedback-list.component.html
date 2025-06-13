@@ -1,0 +1,71 @@
+<div class="d-flex align-items-center justify-content-between">
+    <div>
+        <h1 class="fw-900 mt-3 title">Remaining Interviews for Feedback</h1>
+    </div>
+</div>
+<hr class="title-br p-1 mb-0 mt-0" />
+<div class="pl-3 pr-3 pb-3">
+    <div class="list-table" *ngIf="dataSource && dataSource.data?.length !== 0">
+        <div class="table-responsive-xl text-center mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="srno">
+                    <th mat-header-cell *matHeaderCellDef>Sr no.</th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        {{ i + 1 }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="intervieweeName">
+                    <th mat-header-cell *matHeaderCellDef class="header-width">
+                        Interviewee Name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.intervieweeName }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="roundType">
+                    <th mat-header-cell *matHeaderCellDef class="small-header-width">
+                        Round Type
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element.roundType.roundType }}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="small-header-width">
+                        Status
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.status.status }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="scheduledAt">
+                    <th mat-header-cell *matHeaderCellDef class="header-width">
+                        Schedule
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ (element.scheduledAt | date : 'dd-MM-yyyy hh:mm:ss') || '-' }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="actions-button">Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="d-flex justify-content-around">
+                            <button mat-raised-button class="feedback-button" (click)="feedbackInterview(element)">
+                                Give Feedback
+                            </button>
+                        </span>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+    <div class="list-table d-flex justify-content-center align-items-center"
+        *ngIf="dataSource && dataSource.data?.length === 0">
+        <div class="no-record-found">There are no pending feedbacks.
+        </div>
+    </div>
+</div>

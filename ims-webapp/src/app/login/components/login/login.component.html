@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div class="login-container">
+      <div class="row">
+        <div class="login-inner-container">
+          <img class="position-absolute" src="../../../../assets/images/tatvasoft.png"/>
+            <form [formGroup]="form" (ngSubmit)="submitCredential()">
+                  <h1 class="text-center login-header mt-4"> Login</h1>
+                  <div class="mt-4">
+                      <h2 class="login-text-gray">Login to your account </h2>
+                      <div class="email-form-control mb-1 ">
+                        <mat-form-field class="w-100" appearance="outline" color="primary">
+                          <mat-label>Email</mat-label>
+                          <input
+                            required
+                            id="email"
+                            matInput
+                            formControlName="email"
+                            type="email"
+                            placeholder="Ex. vikassharma@gmail.com"
+                          />
+                          <mat-error
+                            *ngIf="fc.email.errors?.required"
+                          >
+                            Please Enter Email Address
+                          </mat-error>
+                          <mat-error
+                            *ngIf="
+                             !fc.email.errors?.required &&
+                              fc.email.errors?.pattern
+                            "
+                          >
+                            Please Enter Email Address in Valid Format
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+        
+                      <div class="password-form-control mb-1">
+                        <mat-form-field class="w-100"  appearance="outline">
+                          <mat-label>Password</mat-label>
+                          <input
+                            required
+                            matInput
+                            [type]="hide ? 'password' : 'text'"
+                            id="password"
+                            placeholder="Please enter your password"
+                            formControlName="password"
+                            type="password"
+                            maxlength="20"
+                            title="Password must contain 8 to 20 characters at least one digit, lower, upper case and one special character"
+                          />
+                          <button
+                            mat-icon-button
+                            matSuffix
+                            type="button"
+                            (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide"
+                          >
+                          <mat-icon class="icon">{{hide ? "visibility_off" : "visibility"}} </mat-icon>
+                           </button>
+                          <mat-error
+                          *ngIf="fc.password.errors?.required"
+                        >
+                          Please Enter Password
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            !fc.password.errors?.required &&
+                            fc.password.errors?.pattern
+                          "
+                        >
+                        Password must contain 8 to 20 characters, at least one digit, lower case, upper case and one special character.
+                        </mat-error>
+                        </mat-form-field>
+                      
+                      </div>
+                      <div class="d-flex justify-content-center mt-4">
+                        <button
+                          type="submit"
+                          mat-flat-button                         
+                         class="login-btn "
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                    
+              </form>
+
+          </div>
+      </div>
+
+  </div>
+</div>

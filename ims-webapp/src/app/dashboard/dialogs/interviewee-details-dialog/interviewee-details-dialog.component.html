@@ -1,0 +1,205 @@
+<div class="d-flex justify-content-between align-items-around">
+  <h1 mat-dialog-title class="title">Interviewee Details</h1>
+  <mat-icon
+    id="close-icon"
+    class="crossButton"
+    color="primary"
+    (click)="closeDialog()"
+    [mat-dialog-close]="false"
+    >close</mat-icon
+  >
+</div>
+<hr class="title-br p-0 mt-1" />
+<div *ngIf="isLoading" class="cssload-container">
+  <div class="cssload-speeding-wheel"></div>
+</div>
+
+<div mat-dialog-content>
+
+        <div class="col-12 details-container">
+          <div class="row">
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Name</div>
+                <div class="col-7 details">{{ data.name || '-' }}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Email</div>
+                <div class="col-7 details">{{ data.email || '-'}}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Phone</div>
+                <div class="col-7 details">{{ data.phone || '-'}}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Current Company</div>
+                <div class="col-7 details">{{ data.currentCompany || '-' }}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Department</div>
+                <div class="col-7 details" *ngIf="data.department!=null">
+                  <div class="col-7 details">{{ data.department.department || '-' }}</div>
+                </div>
+                <div class="col-7 details" *ngIf="data.department==null">
+                  <div class="col-7 details">{{ '-' }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">
+                  Current CTC<small>(In LPA)</small>
+                </div>
+                <div class="col-7 details">{{ (data.currentCTC | number : "1.2-2") || '-'}}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">
+                  Expected CTC<small>(In LPA)</small>
+                </div>
+                <div class="col-7 details">{{ (data.expectedCTC | number : "1.2-2") || '-' }}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">
+                  Notice Period<small>(In Days)</small>
+                </div>
+                <div class="col-7 details">{{ data.noticePeriod || '-'}}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Year Of Experience</div>
+                <div class="col-7 details">{{ data.yoe || '-' }}</div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="row">
+                <div class="col-5 details-title">Resume</div>
+                <div class="col-7 details">
+                  <a [href]="'assets/' + data.resume" *ngIf="data.isResumePresent" target="_blank"><mat-icon class="custom-file-icon">file_copy</mat-icon></a>
+                  <div *ngIf="!data.isResumePresent">-</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+                <div class="row">
+                  <div class="col-5 details-title">No. Of Interviews</div>
+                  <div class="col-7 details" *ngIf="data.interviews?.length > 0">
+                      {{  (data.interviews && data.interviews.length)}}
+                  </div>
+                  <div class="col-7 details" *ngIf="data.interviews?.length === 0">
+                    -
+                </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-12 interview-container p-1 " *ngIf="data.interviews?.length > 0">
+          <div class="w-100 table-responsive-xl text-center  table-width-new">
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              class="table-with-space table mat-elevation-z8"
+            >
+              <ng-container matColumnDef="srno">
+                <th mat-header-cell *matHeaderCellDef>Sr. No.</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  {{ pageSize * currentPage + i + 1 }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="interviewerName">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  Interviewer Name
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{(element.interviewerFirstName || element.interviewerLastName) ? 
+                    (element.interviewerFirstName + ' ' + element.interviewerLastName).trim() :
+                    '-' 
+                  }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="roundType">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  Round Type
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.roundType.roundType || '-'}}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  Status
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.status.status || '-'}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="scheduledAt">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                >
+                  Schedule (Date & Time)
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{  (element.scheduledAt | date : 'dd-MM-yyyy hh:mm:ss' )|| '-' }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="actions-button">
+                  Feedback
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="d-flex justify-content-around">
+                    <button mat-raised-button class="feedback-button" [disabled]=" !element.feedbackSubmitted || checkInterviewIsNotComplted(element.interviewStatus)" matTooltip="View Feedback"
+                    (click)="feedbackInterview(element)" >
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns; let i = index"
+              ></tr>
+            </table>
+          </div>
+        </div>
+        <div class="col-12 interview-container p-1 justify-content-center  text-danger fw-bold" *ngIf="data.interviews?.length === 0">No interviews scheduled for this interviewee</div>
+</div>
+
+<div mat-dialog-actions class="justify-content-center pt-3">
+  <div class="d-flex h-100">
+    <div class="p-2">
+      <button
+        class="closeBtn"
+        mat-raised-button
+        (click)="closeDialog()"
+        type="button"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

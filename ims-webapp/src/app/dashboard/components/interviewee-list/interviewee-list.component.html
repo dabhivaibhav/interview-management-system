@@ -1,0 +1,257 @@
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-between">
+    <div>
+      <h1 class="fw-900 mt-3 title">Interviewee</h1>
+    </div>
+    <div>
+      <button mat-raised-button class="searchAddBtn" (click)="addEditInterviewee(0, 'Add Interviewee')">
+        <mat-icon>add</mat-icon>Add
+      </button>
+    </div>
+  </div>
+  <hr class="title-br p-0" />
+  <div>
+    <form [formGroup]="searchIntervieweeForm" (ngSubmit)="getInterviewees(true)">
+      <div class="row d-flex justify-content-between">
+        <div class="col-12 col-md-6 col-xl-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Interviewee name</mat-label>
+            <input id="name" matInput formControlName="name" type="text" placeholder="Search interviewee by name" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Minimum year of experience</mat-label>
+            <input id="yoe" matInput formControlName="yoe" type="number"
+              placeholder="Ex. 1, 2, 0.6(For 6 months), etc. (In years)" />
+            <mat-error *ngIf="fc.yoe.errors?.pattern">
+              Year of experience is invalid!!!
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Notice period <small>(in Days)</small></mat-label>
+            <mat-select formControlName="noticePeriod" disableOptionCentering>
+              <mat-option (click)="clearNoticePeriodSelection()">No filter</mat-option>
+              <mat-option *ngFor="let option of noticePeriodOptions" [value]="option.value" placeholder="Select notice period">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Designation</mat-label>
+            <mat-select formControlName="designation" disableOptionCentering >
+              <mat-option (click)="clearDesignationSelection()">No filter</mat-option>
+              <mat-option *ngFor="let designation of designationList" [value]="designation.id" placeholder="Search interviewee by designation">
+                {{ designation.designationName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department" disableOptionCentering >
+              <mat-option (click)="clearDepartmentSelection()">No filter</mat-option>
+              <mat-option *ngFor="let department of departmentList" [value]="department.id" placeholder="Search interviewee by department">
+                {{ department.department }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div>
+            <div class="ctc-title ml-1">Current CTC<small>&nbsp; (in LPA):</small></div>
+            <div class="ml-1">
+              <ngx-slider class="silder-width" [(value)]="mincurrentctcvalue" [(highValue)]="maxcurrentctcvalue"
+                [options]="options"></ngx-slider>
+            </div>
+            <div class="d-flex justify-content-between minmax ml-1 mr-1">
+              <mat-form-field class="mr-5" appearance="outline">
+                <mat-label>Minimum</mat-label>
+                <input  type="number" class="w-100" matInput formControlName="minCurrentCTC"  [(ngModel)]="mincurrentctcvalue"/>
+              </mat-form-field>
+              <mat-form-field class="ml-5" appearance="outline">
+                <mat-label>Maximum</mat-label>
+                <input  type="number" class="w-100" matInput formControlName="maxCurrentCTC"  [(ngModel)]="maxcurrentctcvalue"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div>
+            <div class="ctc-title ml-1">Expected CTC<small>&nbsp; (in LPA):</small></div>
+            <div class="ml-1">
+              <ngx-slider class="silder-width" [(value)]="minexpectedctcvalue" [(highValue)]="maxexpectedctcvalue"
+                [options]="options"></ngx-slider>
+            </div>
+            <div class="d-flex justify-content-between minmax ml-1 mr-1">
+              <mat-form-field class="mr-5" appearance="outline">
+                <mat-label>Minimum</mat-label>
+                <input  type="number" class="w-100" matInput formControlName="minExpectedCTC"  [(ngModel)]="minexpectedctcvalue"/>
+              </mat-form-field>
+              <mat-form-field class="ml-5" appearance="outline">
+                <mat-label>Maximum</mat-label>
+                <input  type="number" class="w-100" matInput formControlName="maxExpectedCTC"  [(ngModel)]="maxexpectedctcvalue"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mt-md-5 col-xl-6 d-flex justify-content-end">
+          <div class="d-flex mt-3 h-100">
+            <div class="mr-2 p-2">
+              <button class="searchAddBtn" mat-raised-button type="submit">
+                Search
+              </button>
+            </div>
+            <div class="p-2">
+              <button class="clearAllBtn" mat-raised-button (click)="onClearAll()">
+                Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="table-responsive-xl text-center mat-elevation-z8 table-width-new mt-4">
+    <div *ngIf="isLoading" class="cssload-container">
+      <div class="cssload-speeding-wheel"></div>
+    </div>
+    <table mat-table class="table-with-space table" matSort [dataSource]="dataSource"
+      (matSortChange)="onSortData($event)" matSortActive="name" matSortStart="asc" matSortDisableClear>
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef class="sr-no">Sr. No.</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ pageSize * pageIndex + i + 1 }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell class="name" mat-sort-header="name" *matHeaderCellDef disableClear>
+          Interviewee Name
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell class="email" mat-sort-header="email" *matHeaderCellDef disableClear>
+          Email
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.email || '-'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="resume">
+        <th class="resume" mat-header-cell *matHeaderCellDef disableClear>
+          Resume
+        </th>
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+          <ng-container *ngIf="element.isResumePresent; else disabledLink">
+            <a [href]="'assets/' + element.resume" target="_blank"><mat-icon class="file-icon">file_copy</mat-icon></a>
+          </ng-container>
+
+          <ng-template #disabledLink>
+            <a [href]="" class="disabled-link" target="_blank"><mat-icon
+                class="disabled-link file-icon">file_copy</mat-icon></a>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="noticePeriod">
+        <th mat-header-cell class="notice-period" mat-sort-header="noticePeriod" *matHeaderCellDef disableClear class="noticePeriod-header">
+          Notice Period <div><small>&nbsp;(In days)</small></div>
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.noticePeriod }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="yoe">
+        <th class="yoe" mat-header-cell mat-sort-header="yoe" *matHeaderCellDef disableClear>
+          YOE
+        </th>
+        <td mat-cell *matCellDef="let element">{{ (element.yoe | number : "1.2-2") || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="department">
+        <th mat-header-cell mat-sort-header="department" *matHeaderCellDef disableClear> Department </th>
+        <td mat-cell *matCellDef="let element"> {{element.department?.department || '-'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell mat-sort-header="designation" *matHeaderCellDef disableClear> Designation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designation?.designationName || '-'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentCompany">
+        <th mat-header-cell class="company" mat-sort-header="currentCompany" *matHeaderCellDef disableClear>
+          Current Company
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.currentCompany || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="currentCTC">
+        <th mat-header-cell class="currentCTC" mat-sort-header="currentCTC" *matHeaderCellDef disableClear class="ctc-header">
+          Current CTC <small>&nbsp; (in LPA)</small>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ (element.currentCTC | number : "1.2-2") || '-' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expectedCTC">
+        <th mat-header-cell class="expectedCTC" mat-sort-header="expectedCTC" *matHeaderCellDef disableClear class="ctc-header">
+          Expected CTC <small>&nbsp; (in LPA)</small>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ (element.expectedCTC | number : "1.2-2") || '-'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-button">
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+          <div class="row justify-content-center">
+            <button mat-raised-button class="view-button" matTooltip="View interviewee" (click)="viewInterviewee(element)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <span class="margin-right"></span>
+            <button mat-raised-button class="EditBtn" matTooltip="Edit"
+              (click)="addEditInterviewee(element.id, 'Edit Interviewee')">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <span class="margin-right"></span>
+            <button mat-raised-button class="delete-button" matTooltip="Delete"
+              (click)="deleteInterviewee(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="noRecord">
+        <td mat-footer-cell *matFooterCellDef colspan="11">
+          <div *ngIf="dataSource && dataSource.data?.length === 0">
+            No record found
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paginatorCol">
+        <td mat-footer-cell *matFooterCellDef colspan="11" style="text-align: start">
+          <mat-paginator #paginator [length]="totalRows" [pageIndex]="pageIndex" [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions" (page)="onPageSizeChange($event)" showFirstLastButtons
+            aria-label="Select page">
+          </mat-paginator>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="viewInterviewee(row)"></tr>
+      <tr mat-footer-row *matFooterRowDef="getFooterRowToDisplay()"></tr>
+    </table>
+  </div>
+  <br />
+</div>

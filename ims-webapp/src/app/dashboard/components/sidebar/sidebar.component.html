@@ -1,0 +1,91 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-sidenav-container class="example-sidenav-container" 
+  >
+    <mat-sidenav class="sidebar" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [fixedInViewport]="mobileQuery.matches" fixedTopGap="0" opened> 
+      <div class="header-logo-container">
+      </div>
+      <div class="sidebar-content">
+        <mat-nav-list *ngIf="roles == 'HR'">
+          <div
+            class="sidebar-item"
+            routerLink="{{ nav.link }}"
+            routerLinkActive="active"
+            *ngFor="let nav of hrNav"
+          >
+            <span>{{ nav.name }}</span>
+          </div>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="roles == 'ADMIN'">
+          <div
+            class="sidebar-item"
+            routerLink="{{ nav.link }}"
+            routerLinkActive="active"
+            *ngFor="let nav of adminNav"
+          >
+            <span>{{ nav.name }}</span>
+          </div>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="roles == 'DEVELOPER'">
+          <div
+            class="sidebar-item"
+            routerLink="{{ nav.link }}"
+            routerLinkActive="active"
+            *ngFor="let nav of developerNav"
+          >
+            <span>{{ nav.name }}</span>
+          </div>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="m-0">
+        <mat-toolbar class="example-toolbar row m-0">
+          <div class="col-1 text-left " style="padding-left: 0% !important;">
+            <button
+              class="color-white border-none"
+              (click)="rotate()"
+              [@rotatedState]="state"
+              mat-icon-button
+              (click)="snav.toggle()"
+            >
+              <mat-icon color="primary">menu</mat-icon>
+            </button>
+          </div>
+          <h1 class="col-5 text-right title-text-color strong">
+            Interview Management System
+          </h1>
+          
+          <div *ngIf="!mobileQuery.matches" class="col-4 col-xl-5 my-profile-container justify-content-end d-flex">
+            <a class="my-profile-link" routerLink="{{ profileUrl }}"
+              ><img
+                alt="profile-image"
+                src="../../../../assets/images/profile_pic.png"
+                class="img-container"
+              /><span class="profile-text-container">{{ userName }}</span></a
+            >
+          </div>
+          <div *ngIf="mobileQuery.matches" class="col-4 col-xl-5 my-profile-container justify-content-end d-flex">
+            <a class="my-profile-link" routerLink="{{ profileUrl }}"
+              ><img
+                alt="profile-image"
+                src="../../../../assets/images/profile_pic.png"
+                class="img-container"
+              /></a
+            >
+          </div>
+          <span class="col-2 col-xl-1 text-right" mat-icon-button (click)="logout()"
+            ><a mat-raised-button color="primary">Logout</a></span
+          >
+        </mat-toolbar>
+        <div class="content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <div class="footer d-flex flex-row-reverse justify-content-between align-items-center" #footer>
+          <span>@InterviewManagementSystem</span>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

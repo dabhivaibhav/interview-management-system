@@ -1,0 +1,133 @@
+<h2 mat-dialog-title style="color: blueviolet">
+  <div class="title">
+    <div class="d-flex justify-content-between">
+      <h1 class="fs-6 fw-900 ps-2">
+        {{ op === "add" ? "Add" : "Edit" }} Availability
+      </h1>
+      <div class="text-right">
+        
+        <div class="d-flex justify-content-between">
+          <div class=""  *ngIf="op === 'edit'"><button class="deleteBtn" mat-button type="button" (click)="deleteAvailability()" 
+            >
+              <mat-icon
+              id="close-icon"
+              class="crossButton"
+              >delete</mat-icon
+            >
+            </button></div>
+        <div class="p-2">
+          <mat-icon
+          id="close-icon"
+          class="crossButton"
+          color="primary"
+          (click)="closeDialog()"
+          [mat-dialog-close]="false"
+          >close</mat-icon
+        >
+        </div>
+          
+        </div>
+       
+      </div>
+    </div>
+    <hr class="title-br p-0 mt-0" />
+  </div>
+</h2>
+
+<mat-dialog-content>
+  <div>
+    <form [formGroup]="form" >
+      <div *ngIf="isLoading" class="cssload-container">
+        <div class="cssload-speeding-wheel"></div>
+      </div>
+      <div class="row">
+        <div class="col-12 days-container" *ngIf="op === 'edit'">
+          <mat-form-field class="w-100">
+            <mat-label>Week day</mat-label>
+            <input
+              id="week-days"
+              matTooltip="You can't change week day"
+              matInput
+              formControlName="weekDay"
+              readonly
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 days-container" *ngIf="op === 'add'">
+          <mat-form-field class="w-100">
+            <mat-label>Week day</mat-label>
+            <mat-select formControlName="weekDay" disableOptionCentering>
+              <mat-option *ngFor="let day of days" [value]="day.id">
+                {{ day.weekDay }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+            *ngIf="fc.weekDay.errors && fc.weekDay.errors?.required"
+            >Please select week day
+          </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Start time</mat-label>
+            <input matInput type="time" formControlName="startTime"  (blur)="checkTime('startTime')" />
+            <mat-error *ngIf="fc.startTime.errors?.scheduledAtValidation"
+            >Please time between 9 am to 6 pm</mat-error
+          >
+          
+          <mat-error *ngIf="!fc.startTime.errors?.scheduledAtValidation && fc.startTime.errors?.timeInvalid"
+          >Please select time less than end time</mat-error
+        >
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>End time</mat-label>
+            <input matInput type="time" formControlName="endTime"   (blur)="checkTime('endTime')"/>
+            <mat-error *ngIf="fc.endTime.errors?.scheduledAtValidation"
+            >Please time between 9 am to 6 pm</mat-error
+          >
+          <mat-error *ngIf="!fc.endTime.errors?.scheduledAtValidation && fc.endTime.errors?.timeInvalid"
+          >Please select time more than start time</mat-error
+        >
+          
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-error *ngIf="!isTwoHoursGap">
+            Minimum difference between start and end time is 2 hours
+          </mat-error>
+        </div>
+        <mat-error>{{ errorMsg }}</mat-error>
+      </div>
+
+      <br />
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div class="mr-2 p-2" *ngIf="op === 'add'">
+    <button class="saveBtn" mat-raised-button color="primary" type="button" (click)="submitAvailabilityForm()">
+      Add
+    </button>
+  </div>
+  <div class="mr-2 p-2" *ngIf="op === 'edit'">
+    <button class="saveBtn" mat-raised-button color="primary" type="button" (click)="submitAvailabilityForm()">
+      Update
+    </button>
+  </div>
+
+  <div class="p-2">
+    <button
+      class="closeBtn"
+      mat-raised-button
+      (click)="closeDialog()"
+      type="button"
+    >
+      Close
+    </button>
+  </div>
+</mat-dialog-actions>

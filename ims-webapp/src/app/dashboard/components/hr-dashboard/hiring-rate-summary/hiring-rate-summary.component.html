@@ -1,0 +1,12 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div>
+    <h1 class="fw-900 mt-3 title">Hiring v/s Interview(This year) </h1>
+  </div>
+</div>
+<hr class="title-br p-2 mt-0" />
+<div class="pl-3 pr-3">
+  <div id="interview-summary-by-hiring-rate-pie-chart" (window:resize)="getInterviewSummaryByHiringRate()"></div>
+</div>

@@ -1,0 +1,284 @@
+<div class="container-fluid">
+  <h1 class="fw-900 mt-3 title">My Profile</h1>
+  <hr class="title-br p-0" />
+
+  <div class="container-fluid">
+    <div class="interviewer-container">
+      <h2 class="subtitle">Personal Details</h2>
+      <hr class="subtitle-br p-0" />
+      <div class="interviewer-details-container">
+        <form [formGroup]="form">
+          <div class="row name-container">
+            <div class="col-6 first-name-container">
+              <mat-form-field class="w-100" appereance="outlined">
+                <mat-label>First name</mat-label>
+                <input
+                  id="first-name"
+                  required
+                  matInput
+                  formControlName="firstName"
+                  type="text"
+                  placeholder="Ex. Vikas"
+                  (keydown)="preventNumericInput($event)"
+                  #tooltip="matTooltip"
+                  [matTooltipDisabled]="fc.firstName.value.length > 1" matTooltip="Minimum two characters required"
+                />
+                <mat-error *ngIf="fc.firstName.touched && fc.firstName.errors?.required">
+                  Please enter first name
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.firstName.touched && !fc.firstName.errors?.required && fc.firstName.errors?.noSpaceAllowed">
+                  Please enter valid first name
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.firstName.touched && !fc.firstName.errors?.required && !fc.firstName.errors?.noSpaceAllowed && fc.firstName.errors?.pattern">
+                  Please enter valid first name
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-6 last-name-container">
+              <mat-form-field class="w-100">
+                <mat-label>Last name</mat-label>
+                <input
+                  id="last-name"
+                  matInput
+                  formControlName="lastName"
+                  type="text"
+                  placeholder="Ex. Sharma"
+                  (keydown)="preventNumericInput($event)"
+                  required
+                  #tooltip="matTooltip"
+                  [matTooltipDisabled]="fc.lastName.value.length > 1" matTooltip="Minimum two characters required"
+                />
+                <mat-error *ngIf="fc.lastName.touched && fc.lastName.errors?.required">
+                  Please enter last name
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.lastName.touched && !fc.lastName.errors?.required && fc.lastName.errors?.noSpaceAllowed">
+                  Please enter valid last name
+                </mat-error>
+                <mat-error
+                  *ngIf="fc.lastName.touched && !fc.lastName.errors?.required && !fc.lastName.errors?.noSpaceAllowed && fc.lastName.errors?.pattern">
+                  Please enter valid last name
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row imp-container">
+            <div class="col-6 email-container">
+              <mat-form-field class="w-100">
+                <mat-label>Email</mat-label>
+                <input
+                  id="email"
+                  matInput
+                  matTooltip="You can't change your email address"
+                  formControlName="email"
+                  type="email"
+                  placeholder="Ex. vikassharma@gmail.com"
+                  required
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-6 user-role-container">
+              <mat-form-field class="w-100">
+                <mat-label>User role</mat-label>
+                <input
+                  id="type"
+                  matTooltip="You can't change your role"
+                  matInput
+                  formControlName="role"
+                  readonly
+                  required
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row designation-yor-container">
+            <div class="col-6 designation-container">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Designation</mat-label>
+                <input required readonly type="text" matTooltip="You can't change your designation" matInput formControlName="designation" />
+              </mat-form-field>
+            </div>
+            <div class="col-6 yoe-container">
+              <mat-form-field class="w-100">
+                <mat-label>Year of experience</mat-label>
+                <input
+                  id="yoe"
+                  matInput
+                  #tooltip="matTooltip"
+                  matTooltip="You can't change your year of experience"
+                  formControlName="yoe"
+                  type="number"
+                  placeholder="Ex. 1, 2, 0.6(For 6 months), etc. (In years)"
+                  min="0"
+                  step="0.01" (input)="limitDecimalDigits($event)"
+                  readonly
+                  required
+                />
+                <mat-error *ngIf="fc.yoe.touched && fc.yoe.errors?.required">
+                  Please enter year of experience
+                </mat-error>
+                <mat-error *ngIf="fc.yoe.touched && !fc.yoe.errors?.required && fc.yoe.errors?.pattern">
+                  Please enter year of experience in valid format
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4 action-container">
+            <button
+              class="m-1 submit-button"
+              mat-flat-button
+              (click)="editInterviewer()"
+              color="primary"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="password-container">
+      <h2 class="subtitle">Password Details</h2>
+      <hr class="subtitle-br p-0" />
+      <form [formGroup]="passwordForm">
+        <div class="password-details-cotainer row">
+          <div class="current-password-container col-4 mb-1">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Current password</mat-label>
+              <input
+                matInput
+                required
+                [type]="currentPasswordHide ? 'password' : 'text'"
+                id="current-password"
+                placeholder="Please enter your current password" 
+                formControlName="currentPassword"
+                type="password"
+                maxlength="20"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="currentPasswordHide = !currentPasswordHide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="currentPasswordHide"
+              >
+                <mat-icon>{{
+                  currentPasswordHide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="
+                  pFC.currentPassword.errors?.required
+                "
+              >
+                Please enter current password
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  !pFC.currentPassword.errors?.required &&
+                  pFC.currentPassword.errors?.pattern
+                "
+              >
+                Please enter valid current password
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="new-password-container col-4 mb-1">
+            <mat-form-field class="w-100">
+              <mat-label>New password</mat-label>
+              <input
+                matInput
+                required
+                [type]="newPasswordHide ? 'password' : 'text'"
+                id="new-password"
+                #tooltip="matTooltip"
+                matTooltip="Password must contain 8 to 20 characters at least one digit, lower, upper case and one special character"
+                placeholder="Please enter your new password"
+                formControlName="newPassword"
+                maxlength="20"
+                type="password"
+                (ngModelChange)="checkPassword()"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="newPasswordHide = !newPasswordHide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="newPasswordHide"
+              >
+                <mat-icon>{{
+                  newPasswordHide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error *ngIf="pFC.newPassword.errors?.required">
+                Please enter new password
+              </mat-error>
+              <mat-error
+                *ngIf="!pFC.newPassword.errors?.required && pFC.newPassword.errors?.noSpaceAllowed">
+                Please enter valid new password
+              </mat-error>
+              <mat-error
+                *ngIf="!pFC.newPassword.errors?.required && !pFC.newPassword.errors?.noSpaceAllowed && pFC.newPassword.errors?.pattern">
+                Please enter new password in valid format
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="new-password-container col-4 mb-1">
+            <mat-form-field class="w-100">
+              <mat-label>Confirm password</mat-label>
+              <input
+                matInput
+                required
+                [type]="confirmPasswordHide ? 'password' : 'text'"
+                id="confirm-password"
+                #tooltip="matTooltip"
+                matTooltip="Password must contain 8 to 20 characters at least one digit, lower, upper case and one special character"
+                formControlName="confirmPassword"
+                type="password"
+                placeholder="Please enter confirm password" maxlength="20"
+                (ngModelChange)="checkPassword()"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="confirmPasswordHide = !confirmPasswordHide"
+
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="confirmPasswordHide"
+              >
+                <mat-icon>{{
+                  confirmPasswordHide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error *ngIf="pFC.confirmPassword.errors?.required">
+                Please enter confirm password
+              </mat-error>
+              <mat-error
+                *ngIf="!pFC.confirmPassword.errors?.required && (!pFC.confirmPassword.errors?.noSpaceAllowed || !pFC.confirmPassword.errors?.pattern || pFC.confirmPassword.errors)">
+                Password and confirm password does not match
+              </mat-error>
+            </mat-form-field> 
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4 action-container">
+          <button
+            class="m-1 submit-button"
+            mat-flat-button
+            (click)="submitPassword()"
+            color="primary"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

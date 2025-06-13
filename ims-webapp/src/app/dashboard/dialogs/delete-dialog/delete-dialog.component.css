@@ -1,0 +1,22 @@
+/* .noBtn{
+    border: 1px solid grey;
+} */
+
+.title {
+    color: #673ab7;
+}
+
+.closeBtn{
+    border: 1px solid  #673ab7;
+}
+
+.delete-button {
+    border: 1px solid #673ab7;
+    background-color: #673ab7;
+    color: white;
+}
+
+.delete-button:hover {
+    color: #673ab7;
+    background-color: white;
+}

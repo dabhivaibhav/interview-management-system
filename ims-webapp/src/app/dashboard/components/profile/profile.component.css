@@ -1,0 +1,35 @@
+.title-br {
+    border-top: 5px solid #673ab7;
+}
+
+.title {
+    color: #673ab7;
+}
+
+.submit-button{
+    border: 1px solid #673ab7;
+}
+
+.submit-button:hover{
+    color: #673ab7;
+    background-color: white;
+    border: 1px solid #673ab7;
+}
+
+.subtitle-br {
+    border-top: 3px solid #623ca3;
+}
+
+.subtitle {
+    color: #623ca3;
+}
+
+.readonly-wrapper {
+    cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+    pointer-events: none;
+}
+
+.hidden { display: none; }

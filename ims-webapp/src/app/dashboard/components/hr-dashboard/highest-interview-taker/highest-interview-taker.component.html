@@ -1,0 +1,46 @@
+<div class="row m-0">
+  <div class="col-xl-4 col-lg-6">
+    <div class="card">
+      <div class="card-title">Highest Interview Taker</div>
+      <hr class="hr-divider" />
+      <div class="card-subtitle">
+        <div class="row">
+          <div class="col-6">
+            <div class="month-title">This Month</div>
+            <hr class="hr-sub-divider" />
+            <div>
+              <div class="month-name">
+                Name: <b>{{ data?.interviewerNameForMonth }}</b>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="count-subtitle d-flex justify-content-start">
+                    <div class="">
+                    {{ data?.countOfMonthlyInterviews }} <span class="from-title">from</span> {{ data?.totalMonthlyInterviews}} <span class="from-title">(total)</span>
+                  </div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 vr-div">
+            <div class="year-title">This Year</div>
+            <hr class="hr-sub-divider" />
+            <div>
+              <div class="year-name">
+                Name: <b>{{ data?.interviewerNameForYear }}</b>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="count-subtitle d-flex justify-content-start">
+                    <div class="">
+                    {{ data?.countOfYearlyInterviews }} <span class="from-title">from</span> {{ data?.totalOfYearlyInterviews}} <span class="from-title">(total)</span>
+                  </div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

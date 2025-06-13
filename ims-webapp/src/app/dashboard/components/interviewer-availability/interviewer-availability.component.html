@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div *ngIf="isLoading" class="cssload-container">
+    <div class="cssload-speeding-wheel"></div>
+  </div>
+  <div class="d-flex align-items-center justify-content-between">
+    <div>
+      <h1 class="fw-900 mt-3 title">My Availability</h1>
+    </div>
+    <div>
+      <button mat-raised-button class="searchAddBtn" (click) = "addMyAvailability({op:'add', event:null, allEvent: allAvailability})" >
+        <mat-icon>add</mat-icon>Add
+      </button>
+    </div>
+  </div>
+  <hr class="title-br p-0" />
+  <ng-template #weekView let-segment="segment" let-locale="locale"  let-isTimeLabel="isTimeLabel" >
+    <div  
+    class="cal-hour-segment"  style="height: 50px; text-wrap: nowrap; width: auto;"
+    [class.cal-hour-start]="segment.isStart"
+    [class.cal-after-hour-start]="!segment.isStart"
+    [ngClass]="segment.cssClass">
+    <span class="cal-time" *ngIf="isTimeLabel"  style="width: 116px;">
+      {{ segment.date | timeRange}}
+    </span>
+    
+   </div>
+  </ng-template>
+
+  <mwl-calendar-week-view [viewDate]="viewDate"  [dayStartHour]="dayStartHour"
+  [hourSegments]="1" [hourSegmentTemplate]="weekView" [hourSegmentHeight]="50"  [events]="events"  (eventClicked)="eventClicked($event.event)"
+  [dayEndHour]="dayEndHour"  [excludeDays]="excludeDays" [weekStartsOn]="1"  >
+  </mwl-calendar-week-view>
+
+  <div *ngIf="addList.length>0" class="d-flex justify-content-end ">
+    <div class="my-4 mx-2">
+      <span class="mx-3 save-text">Click on save button to add your availability</span>
+      <button mat-raised-button class="searchAddBtn mr-2" (click) = "onSave()" >
+        Save
+      </button>
+      <button mat-raised-button class="searchAddBtn" (click) = "onClear()" >
+        clear
+      </button>
+    </div>
+  </div>
+  <div *ngIf="addList.length==0" class="d-flex justify-content-end my-4 mx-2">
+    <button mat-flat-button class="mr-2" (click) = "onSave()" disabled>
+      Save
+    </button>
+    <button mat-raised-button class="" disabled>
+      clear
+    </button>
+  </div>
+  <mat-error *ngIf="minDayError" class="text-right text-danger mx-2 mb-4">You must add availability of at least three days</mat-error>
+</div>

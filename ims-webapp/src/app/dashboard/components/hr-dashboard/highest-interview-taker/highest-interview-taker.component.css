@@ -1,0 +1,74 @@
+.card {
+    border-radius: 8px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 20px 0px;
+    background-color: #c9aaff;
+    color: black;
+}
+
+.card-title {
+    font-size: 20px;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.hr-divider {
+    border-top: 2px solid black;
+    margin: 15px 0;
+    margin-top: 0px;
+}
+
+.hr-sub-divider {
+    border-top: 1px solid black;
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
+.month-title,
+.year-title {
+    font-size: 16px;
+    font-weight: 500;
+
+}
+
+.vr-div::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background-color: black;
+}
+
+.year-name,
+.month-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.count-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vertical-line {
+    border-left: 10px solid white;
+    height: 100%;
+}
+.count-subtitle{
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.from-title{
+    font-weight: 500;
+    font-size: 14px;
+    color: rgb(62, 61, 61);
+}

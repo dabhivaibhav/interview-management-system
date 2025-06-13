@@ -1,0 +1,169 @@
+<div class="d-flex justify-content-between align-items-around">
+  <h1 mat-dialog-title class="title">Interview Details</h1>
+  <mat-icon
+    id="close-icon"
+    class="crossButton"
+    color="primary"
+    (click)="closeDialog()"
+    [mat-dialog-close]="false"
+    >close</mat-icon
+  >
+</div>
+<hr class="title-br p-0 mt-1" />
+<div *ngIf="isLoading" class="cssload-container">
+  <div class="cssload-speeding-wheel"></div>
+</div>
+
+<div mat-dialog-content>
+  <h2 class="subtitle">Interviewee Details</h2>
+  <hr class="subtitle-br p-0" />
+  <div class="col-12 details-container">
+    <div class="row">
+      <div class="col-6 p-1">
+        <div class="row">
+          <div class="col-5 details-title">Interviewee Name</div>
+          <div class="col-7 details">{{ data.intervieweeName || "-" }}</div>
+        </div>
+      </div>
+      <div class="col-6 p-1">
+        <div class="row">
+          <div class="col-5 details-title">Interviewee Email</div>
+          <div class="col-7 details">{{ data.intervieweeEmail || "-" }}</div>
+        </div>
+      </div>
+      <div class="col-6 p-1">
+        <div class="row">
+          <div class="col-5 details-title">Interviewee Phone</div>
+          <div class="col-7 details">{{ data.intervieweePhone || "-" }}</div>
+        </div>
+      </div>
+
+      <div class="col-6 p-1">
+        <div class="row">
+          <div class="col-5 details-title">Interviewee Resume</div>
+          <div class="col-7 details">
+            <a
+              [href]="'assets/' + data.intervieweeResume"
+              *ngIf="data.resumeExist"
+              target="_blank"
+              ><mat-icon class="custom-file-icon">file_copy</mat-icon></a
+            >
+            <div *ngIf="!data.resumeExist">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 interview-round-container p-1">
+    <h2 class="subtitle">Round Details</h2>
+    <hr class="subtitle-br p-0" />
+
+    <mat-horizontal-stepper labelPosition="bottom" fxLayoutAlign="center center"  [selectedIndex]="desiredIndex" linear="true">
+
+    <mat-step *ngFor="let step of steps;let i = index" [label]="step.label" [completed]="step.completed"  [aria-label] = "step.state"   [state]="step.state" matTooltip="Info about the Graph" >
+      <div class="" style="height: 120px">
+        <div class="selected" *ngIf="(step.content || step.pending) && step.label != 'Done'">
+          <div class="col-12 details-container" >
+              <div class="row">
+                <div class="col-6 p-1">
+                  <div class="row">
+                    <div class="col-5 details-title">Interviewer Name</div>
+                    <div class="col-7 details">
+                      {{ step.content.interviewerName || "-" }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-1">
+                  <div class="row">
+                    <div class="col-5 details-title">Interviewer Email</div>
+                    <div class="col-7 details">
+                      {{ step.content.interviewerEmail || "-" }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-1">
+                  <div class="row">
+                    <div class="col-5 details-title">ScheduledAt</div>
+                    <div class="col-7 details" style="font-size: 15px;">
+                      {{ (step.content.scheduledAt  | date : 'dd-MM-yyyy hh:mm:ss')  || "-" }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-1">
+                  <div class="row">
+                    <div class="col-5 details-title">Status</div>
+                    <div class="col-7 details" style="font-size: 15px;">
+                      {{ step.content.status  || "-" }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-1" *ngIf="step.content.rescheduleAt!==null">
+                  <div class="row">
+                    <div class="col-5 details-title">Reschedule At</div>
+                    <div class="col-7 details" style="font-size: 15px;">
+                      {{(step.content.rescheduleAt  | date : 'dd-MM-yyyy hh:mm:ss') || "-" }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-1" *ngIf="step.content.rescheduleReason!==null">
+                  <div class="row">
+                    <div class="col-5 details-title">Reschedule reason</div>
+                    <div class="col-7 details" style="font-size: 15px;">
+                      {{ step.content.rescheduleReason  || "-" }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!step.pending">
+                <button mat-raised-button class="feedback-button w-100" matTooltip="View Feedback" (click)= "viewFeedback(step.content)">
+                  View Feedback
+                </button>
+            </div>
+         </div>
+         <div class="" style="height:100%;" *ngIf="!step.content && step.label != 'Done'">
+          <div class="" style="font-size: large; font-weight: 500;    display: flex;height:100%;justify-content: center;width: 100%;align-items: center;">
+            No Interview scheduled now!!
+          </div>
+          </div>
+          <div class="" style="height:100%;" *ngIf="desiredIndex === 5 && step.label === 'Done'">
+            <div class="" style="font-size: large; font-weight: 500;    display: flex;height:100%;justify-content: center;width: 100%;align-items: center;">
+              Interviewee selected!!
+            </div>
+            </div>
+      </div>
+      </mat-step>
+    <ng-template #stepperIcon *ngFor="let step of steps">
+      <mat-icon>{{step.icon}}</mat-icon>
+    </ng-template>
+    
+    <ng-template matStepperIcon="number" let-index="index">
+      <ng-container [ngTemplateOutlet]="matStepperIcons && matStepperIcons[index]"></ng-container>
+    </ng-template>
+    <ng-template matStepperIcon="edit" let-index="index">
+      <ng-container [ngTemplateOutlet]="matStepperIcons && matStepperIcons[index]"></ng-container>
+    </ng-template>
+    <ng-template matStepperIcon="done" let-index="index">
+      <ng-container [ngTemplateOutlet]="matStepperIcons && matStepperIcons[index]"></ng-container>
+    </ng-template>
+    <ng-template matStepperIcon="error" let-index="index">
+      <ng-container [ngTemplateOutlet]="matStepperIcons && matStepperIcons[index]"></ng-container>
+    </ng-template>
+</mat-horizontal-stepper>
+  </div>
+</div>
+
+<div mat-dialog-actions class="justify-content-center pt-3">
+  <div class="d-flex h-100">
+    <div class="p-2">
+      <button
+        class="closeBtn"
+        mat-raised-button
+        (click)="closeDialog()"
+        type="button"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

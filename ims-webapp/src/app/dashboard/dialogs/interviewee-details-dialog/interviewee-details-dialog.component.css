@@ -1,0 +1,92 @@
+.closeBtn{
+  border: 1px solid  #673ab7;
+}
+td, th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.details-title{
+    font-weight: 500;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+.details-container{
+    font-size: 16px;
+}
+.details{
+    font-weight: 400;
+    text-wrap: nowrap;
+    color: gray;
+    text-overflow: ellipsis;
+}
+table {
+    width: 100%;
+  }
+  
+  .mat-header-cell {
+    background-color: #673ab7;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .title-br {
+    border-top: 5px solid #673ab7;
+    margin-top: 5px;
+  }
+  
+  .title {
+    color: #673ab7;
+  }
+  
+  .table-with-space th,
+  .table-with-space td {
+    padding: 0.7rem;
+  }
+  
+  .margin-right {
+    margin-right: 5px;
+  }
+  
+  .mat-elevation-z8 {
+    overflow-x: auto !important;
+  }
+  
+  .actions-button {
+    min-width: 250px;
+  }
+
+  .feedback-button {
+    border: 1px solid #673ab7;
+    color: #673ab7;
+  }
+  
+  .feedback-button:hover:enabled {
+    background-color: #673ab7;
+    color: white !important;
+  }
+
+  
+  .feedback-button:disabled {
+    border: 1px solid #cccccc;
+  }
+
+  .container-fluid {
+    padding: 0 30px;
+  }
+
+  .details-container{
+    margin-bottom: 10px;
+  }
+  .subtitle-br {
+    border-top: 3px solid #623ca3;
+}
+
+.subtitle {
+    color: #623ca3;
+}
+
+::ng-deep .custom-file-icon {
+  color: #673ab7;
+  height: 15px !important;
+  width: 15px !important;
+}

@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-between">
+    <div>
+      <h1 class="fw-900 mt-3 title">Interviewer</h1>
+    </div>
+    <div>
+      <button mat-raised-button class="searchAddBtn" (click)="addEditInterviewer(0)">
+        <mat-icon>add</mat-icon>Add
+      </button>
+    </div>
+  </div>
+  <hr class="title-br p-0" />
+  <div>
+    <form [formGroup]="searchInterviewerForm" (ngSubmit)="getInterviewers(true)">
+      <div class="row">
+        <div class="col-12 col-md-6 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Interviewer Name</mat-label>
+            <input id="search" matInput formControlName="search" placeholder="Search interviewer by name or email "
+              type="text" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Minimum year of experience</mat-label>
+            <input id="yoe" matInput formControlName="yoe" type="number"
+              placeholder="Ex. 1, 2, 0.6(For 6 months), etc. (In years)" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department" disableOptionCentering >
+              <mat-option (click)="clearDepartmentSelection()">No filter</mat-option>
+              <mat-option *ngFor="let department of departmentList" [value]="department.id" placeholder="Search interviewer by department">
+                {{ department.department }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Designation</mat-label>
+            <mat-select formControlName="designation" disableOptionCentering >
+              <mat-option (click)="clearDesignationSelection()">No filter</mat-option>
+              <mat-option *ngFor="let designation of designationList" [value]="designation.id" placeholder="Search interviewer by designation">
+                {{ designation.designationName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-xl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Interviewer role</mat-label>
+            <mat-select id="userRole" formControlName="userRole" disableOptionCentering>
+              <mat-option (click)="clearInterviewerRoleSelection()">No filter</mat-option>
+              <mat-option *ngFor="let role of userRoleList" [value]="role.id" placeholder="Search interviewer by role">
+                {{ role.type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-12 col-xl-2 d-flex justify-content-end">
+          <div class="d-flex mt-3 h-100">
+            <div class="mr-2 p-2">
+              <button class="searchAddBtn" mat-raised-button type="submit">
+                Search
+              </button>
+            </div>
+            <div class="p-2">
+              <button class="clearAllBtn" mat-raised-button (click)="onClearAll()">
+                Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="table-responsive-xl text-center  table-width-new">
+      <div *ngIf="isLoading" class="cssload-container">
+        <div class="cssload-speeding-wheel"></div>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="table-with-space table mat-elevation-z8" (matSortChange)="onSortData($event)"
+        matSortActive="name" matSortStart="asc" matSort matSortDisableClear>
+
+        <ng-container matColumnDef="srNo">
+          <th mat-header-cell *matHeaderCellDef>Sr. No.</th>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{ pageSize * pageIndex + i + 1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell mat-sort-header="firstName" *matHeaderCellDef disableClear>Interviewer Name </th>
+          <td mat-cell *matCellDef="let element">
+            {{(element.firstName || element.lastName) ?
+              (element.firstName + ' ' + element.lastName).trim() :
+              '-'
+            }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell mat-sort-header="email" *matHeaderCellDef disableClear> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email || '-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell mat-sort-header="department" *matHeaderCellDef disableClear> Department </th>
+          <td mat-cell *matCellDef="let element"> {{(element.department && element.department.department) || '-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="designation">
+          <th mat-header-cell mat-sort-header="designation" *matHeaderCellDef disableClear> Designation </th>
+          <td mat-cell *matCellDef="let element"> {{(element.designation && element.designation.designationName) || '-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="yoe">
+          <th mat-header-cell mat-sort-header="yoe" *matHeaderCellDef disableClear> Experience <small>&nbsp; (In years) </small></th>
+          <td mat-cell *matCellDef="let element"> {{element.yoe || '-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell mat-sort-header="role" *matHeaderCellDef disableClear> Role </th>
+          <td mat-cell *matCellDef="let element">  {{element.role.type || '-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-button"> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              <button mat-raised-button class="EditBtn" matTooltip="Edit"
+                (click)="addEditInterviewer(element.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <span class="margin-right"></span>
+              <button mat-raised-button class="delete-button" matTooltip="Delete"
+                (click)="deleteInterviewer(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noRecord">
+          <td mat-footer-cell *matFooterCellDef colspan="7">
+            <div *ngIf="dataSource && dataSource.data?.length === 0">
+              No record found
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paginatorCol">
+          <td mat-footer-cell *matFooterCellDef colspan="7" style="text-align: start">
+            <mat-paginator #paginator [length]="totalRows" [pageIndex]="pageIndex" [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons
+              aria-label="Select page">
+            </mat-paginator>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+        <tr mat-footer-row *matFooterRowDef="getFooterRowToDisplay()"></tr>
+
+      </table>
+  </div>
+  <br>
+
+</div>

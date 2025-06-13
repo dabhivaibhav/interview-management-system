@@ -1,0 +1,47 @@
+table {
+    width: 100%;
+}
+
+.list-table {
+    margin-top: 22px;
+    border: 1px solid rgb(196, 196, 196);
+    height: 350px;
+    overflow-y: auto;
+    background-color: white;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+}
+
+.no-record-found {
+    color: gray;
+    font-size: 20px;
+}
+
+.header-width {
+    min-width: 200px;
+}
+
+.table-with-space th,
+.table-with-space td {
+    padding: 0.7rem;
+}
+
+.small-header-width {
+    min-width: 100px;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none !important;
+}
+
+.feedback-button {
+    border: 1px solid #673ab7;
+    color: #673ab7;
+}
+
+.feedback-button:hover:enabled {
+    background-color: #673ab7;
+    color: white !important;
+}
