@@ -29,4 +29,4 @@ React · TypeScript · Spring Boot (internal) · JWT authentication · REST API 
 
 ## Note on backend
 
-The backend API was developed as internal tooling at Staunchsys IT Services and remains proprietary. The frontend and notification service in this repo were built and owned by me as the sole developer on this module.
+The backend API was developed as internal tooling at Tatvasoft and remains proprietary. The frontend and notification service in this repo were built and owned by me as the sole developer on this module.
