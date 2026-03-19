@@ -2,7 +2,7 @@
 
 Full-stack application for end-to-end interview pipeline management — from application intake through scheduling, live feedback, and final hiring decisions.
 
-Built at Staunchsys IT Services as internal tooling to replace a manual, spreadsheet-driven hiring process.  
+Built at Tatvasoft as internal tooling to replace a manual, spreadsheet-driven hiring process.  
 The Spring Boot backend is proprietary to Staunchsys and is not publicly available. This repository contains the frontend webapp and notification microservice.
 
 ## What it does
