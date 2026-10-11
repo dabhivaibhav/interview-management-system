@@ -2,8 +2,8 @@
 
 Full-stack application for end-to-end interview pipeline management — from application intake through scheduling, live feedback, and final hiring decisions.
 
-Built at Tatvasoft as internal tooling to replace a manual, spreadsheet-driven hiring process.  
-The Spring Boot backend is proprietary to Staunchsys and is not publicly available. This repository contains the frontend webapp and notification microservice.
+Built at TatvaSoft (Nov 2023 – Jul 2024) as internal tooling to replace a manual, spreadsheet-driven hiring process.  
+The Spring Boot backend is proprietary to TatvaSoft and is not publicly available. This repository contains the frontend webapp and notification microservice.
 
 ## What it does
 
@@ -14,7 +14,7 @@ The Spring Boot backend is proprietary to Staunchsys and is not publicly availab
 
 ## Outcome
 
-Hiring cycle time reduced by ~30% (manager estimate) by eliminating manual status tracking and back-and-forth email chains between HR, interviewers, and candidates.
+Coordinator review time cut by 70% across 500+ interview workflows a week, as reported by the coordinator team, by eliminating manual status tracking and back-and-forth email chains between HR, interviewers, and candidates.
 
 ## Architecture
 ```
@@ -29,4 +29,4 @@ React · TypeScript · Spring Boot (internal) · JWT authentication · REST API 
 
 ## Note on backend
 
-The backend API was developed as internal tooling at Tatvasoft and remains proprietary. The frontend and notification service in this repo were built and owned by me as the sole developer on this module.
+The backend API was developed as internal tooling at TatvaSoft and remains proprietary. The frontend and notification service in this repo were built and owned by me as the sole developer on this module.
